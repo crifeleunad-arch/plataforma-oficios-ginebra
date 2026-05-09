@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1778328189321,
+    "nombre": "Marino",
+    "oficio": "Mantenimiento",
+    "ubicacion": "Ginebra",
+    "experiencia": "2 años",
+    "descripcion": "Mantenimiento de computadores y servicios de tegnologia",
+    "telefono": "3217418596",
+    "valoracion": 5
+  },
+  {
+    "id": 1,
+    "nombre": "Carlos Ramírez",
+    "oficio": "Plomería",
+    "ubicacion": "Centro, Ginebra",
+    "experiencia": "8 años",
+    "descripcion": "Reparación de fugas, instalación de grifería y mantenimiento general.",
+    "telefono": "300 123 4567",
+    "valoracion": 4.8
+  },
+  {
+    "id": 2,
+    "nombre": "Andrés Torres",
+    "oficio": "Electricidad",
+    "ubicacion": "Barrio El Jardín",
+    "experiencia": "6 años",
+    "descripcion": "Instalaciones eléctricas domiciliarias, cambio de tomacorrientes y diagnóstico básico.",
+    "telefono": "301 234 5678",
+    "valoracion": 4.9
+  },
+  {
+    "id": 3,
+    "nombre": "Luis Gómez",
+    "oficio": "Pintura",
+    "ubicacion": "Sector La Floresta",
+    "experiencia": "5 años",
+    "descripcion": "Pintura interior y exterior, estuco y retoques para viviendas y locales.",
+    "telefono": "302 345 6789",
+    "valoracion": 4.7
+  }
+]

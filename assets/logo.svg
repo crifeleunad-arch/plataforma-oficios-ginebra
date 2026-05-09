@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="40" fill="#4338ca"/>
+  <path d="M55 120c18-18 30-52 45-52s27 34 45 52" stroke="#fff" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="100" cy="82" r="14" fill="#fff"/>
+  <text x="100" y="165" font-size="26" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif">Ginebra</text>
+</svg>
