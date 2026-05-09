@@ -40,13 +40,16 @@ El proyecto busca mejorar la visibilidad de plomeros, electricistas, pintores, c
 
 ## Cómo ejecutar el proyecto
 
-### 1. Instalar dependencias del frontend
+### 1. Iniciar en cmd, acceder a la ruta del proyecto
+cd Downloads\plataforma_oficios_ginebra
+
+### 2. Instalar dependencias del frontend
 
 ```bash
 npm install
 ```
 
-### 2. Instalar dependencias del backend
+### 3. Instalar dependencias del backend
 
 ```bash
 cd backend
@@ -54,7 +57,7 @@ npm install
 cd ..
 ```
 
-### 3. Iniciar el backend
+### 4. Iniciar el backend
 
 ```bash
 cd backend
@@ -67,7 +70,7 @@ El backend quedará disponible en:
 http://localhost:3001
 ```
 
-### 4. Iniciar el frontend
+### 5. Iniciar el frontend
 
 En otra terminal, desde la raíz del proyecto:
 
@@ -87,5 +90,4 @@ http://localhost:5173
 2. El usuario puede buscar por texto o filtrar por categoría.
 3. El formulario permite publicar un nuevo servicio.
 4. El frontend envía la información al backend.
-5. El backend guarda los datos en un archivo JSON local.
-
+5. El backend guarda los datos en un archivo JSON loca
