@@ -5,9 +5,11 @@ export const oficiosIniciales = [
     oficio: 'Plomería',
     ubicacion: 'Centro, Ginebra',
     experiencia: '8 años',
-    descripcion: 'Reparación de fugas, instalación de grifería y mantenimiento general.',
+    descripcion: 'Reparación de fugas, instalación de grifería y mantenimiento general. Atiendo emergencias los fines de semana.',
     telefono: '300 123 4567',
-    valoracion: 4.8
+    foto: '',
+    valoracion: 4.8,
+    votos: 15
   },
   {
     id: 2,
@@ -15,9 +17,11 @@ export const oficiosIniciales = [
     oficio: 'Electricidad',
     ubicacion: 'Barrio El Jardín',
     experiencia: '6 años',
-    descripcion: 'Instalaciones eléctricas domiciliarias, cambio de tomacorrientes y diagnóstico básico.',
+    descripcion: 'Instalaciones eléctricas domiciliarias, cambio de tomacorrientes, diagnóstico y certificaciones básicas.',
     telefono: '301 234 5678',
-    valoracion: 4.9
+    foto: '',
+    valoracion: 4.9,
+    votos: 22
   },
   {
     id: 3,
@@ -25,8 +29,118 @@ export const oficiosIniciales = [
     oficio: 'Pintura',
     ubicacion: 'Sector La Floresta',
     experiencia: '5 años',
-    descripcion: 'Pintura interior y exterior, estuco y retoques para viviendas y locales.',
+    descripcion: 'Pintura interior y exterior, estuco y retoques para viviendas y locales. Trabajo con materiales de primera.',
     telefono: '302 345 6789',
-    valoracion: 4.7
+    foto: '',
+    valoracion: 4.7,
+    votos: 9
+  },
+  {
+    id: 4,
+    nombre: 'Marino Pérez',
+    oficio: 'Mantenimiento',
+    ubicacion: 'Ginebra',
+    experiencia: '2 años',
+    descripcion: 'Mantenimiento y reparación de computadores, impresoras y equipos de tecnología en general.',
+    telefono: '321 741 8596',
+    foto: '',
+    valoracion: 4.2,
+    votos: 6
+  },
+  {
+    id: 5,
+    nombre: 'Juan Pablo Vargas',
+    oficio: 'Carpintería',
+    ubicacion: 'Barrio Simón Bolívar',
+    experiencia: '12 años',
+    descripcion: 'Fabricación de muebles a medida, reparación de puertas y ventanas, instalación de closets y cocinas integrales.',
+    telefono: '313 456 7890',
+    foto: '',
+    valoracion: 4.6,
+    votos: 18
+  },
+  {
+    id: 6,
+    nombre: 'Sandra Muñoz',
+    oficio: 'Pintura',
+    ubicacion: 'Vereda El Placer',
+    experiencia: '4 años',
+    descripcion: 'Pintura decorativa, murales y acabados especiales. Especialista en pintura para fachadas con clima húmedo.',
+    telefono: '315 567 8901',
+    foto: '',
+    valoracion: 3.9,
+    votos: 7
+  },
+  {
+    id: 7,
+    nombre: 'Héctor Ospina',
+    oficio: 'Electricidad',
+    ubicacion: 'Centro, Ginebra',
+    experiencia: '10 años',
+    descripcion: 'Instalación de redes eléctricas industriales y residenciales, mantenimiento preventivo y correctivo.',
+    telefono: '317 678 9012',
+    foto: '',
+    valoracion: 4.5,
+    votos: 11
+  },
+  {
+    id: 8,
+    nombre: 'Fermín Castaño',
+    oficio: 'Plomería',
+    ubicacion: 'Barrio Las Américas',
+    experiencia: '3 años',
+    descripcion: 'Instalación de tuberías, reparación de baños y cocinas. Manejo de sistemas de tanque y bomba de agua.',
+    telefono: '318 789 0123',
+    foto: '',
+    valoracion: 4.1,
+    votos: 4
+  },
+  {
+    id: 9,
+    nombre: 'Rosa Elena Quintero',
+    oficio: 'Mantenimiento',
+    ubicacion: 'Barrio El Progreso',
+    experiencia: '7 años',
+    descripcion: 'Limpieza profunda de hogares, oficinas y locales. Manejo de productos especializados y horarios flexibles.',
+    telefono: '311 890 1234',
+    foto: '',
+    valoracion: 4.7,
+    votos: 13
+  },
+  {
+    id: 10,
+    nombre: 'Diego Hernández',
+    oficio: 'Carpintería',
+    ubicacion: 'Vereda Campoalegre',
+    experiencia: '9 años',
+    descripcion: 'Elaboración de estructuras en madera, reparación de techos, pisos laminados y enchapes. Trabajo garantizado.',
+    telefono: '314 901 2345',
+    foto: '',
+    valoracion: 4.3,
+    votos: 8
+  },
+  {
+    id: 11,
+    nombre: 'Paola Ríos',
+    oficio: 'Pintura',
+    ubicacion: 'Barrio Santa Ana',
+    experiencia: '3 años',
+    descripcion: 'Pintura de interiores con acabados lisos y texturizados. Manejo de colores a pedido y presupuesto sin costo.',
+    telefono: '316 012 3456',
+    foto: '',
+    valoracion: 0,
+    votos: 0
+  },
+  {
+    id: 12,
+    nombre: 'Fabio Castillo',
+    oficio: 'Electricidad',
+    ubicacion: 'Barrio El Rosario',
+    experiencia: '5 años',
+    descripcion: 'Instalación de sistemas eléctricos, cámaras de seguridad y automatización básica del hogar.',
+    telefono: '319 123 4567',
+    foto: '',
+    valoracion: 0,
+    votos: 0
   }
 ];
