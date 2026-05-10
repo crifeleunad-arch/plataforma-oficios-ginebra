@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { oficiosIniciales } from './data/oficiosIniciales';
+import Avatar from './Avatar';
+import Estrellas from './Estrellas';
 
 const categorias = ['Todas', 'Plomería', 'Electricidad', 'Pintura', 'Carpintería', 'Mantenimiento'];
 
@@ -12,6 +14,8 @@ const estadoInicialFormulario = {
   telefono: ''
 };
 
+const LIMITE_FOTO_BYTES = 400 * 1024; // 400 KB
+
 export default function App() {
   const [oficios, setOficios] = useState([]);
   const [filtro, setFiltro] = useState('Todas');
@@ -19,6 +23,8 @@ export default function App() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
   const [formulario, setFormulario] = useState(estadoInicialFormulario);
+  const [foto, setFoto] = useState('');
+  const [errorFoto, setErrorFoto] = useState('');
   const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
@@ -53,13 +59,34 @@ export default function App() {
     setFormulario((anterior) => ({ ...anterior, [name]: value }));
   };
 
+  const manejarFoto = (evento) => {
+    const archivo = evento.target.files[0];
+    if (!archivo) return;
+    setErrorFoto('');
+
+    if (!archivo.type.startsWith('image/')) {
+      setErrorFoto('Solo se permiten imágenes.');
+      return;
+    }
+    if (archivo.size > LIMITE_FOTO_BYTES) {
+      setErrorFoto('La imagen no puede superar 400 KB.');
+      return;
+    }
+
+    const lector = new FileReader();
+    lector.onload = (e) => setFoto(e.target.result);
+    lector.readAsDataURL(archivo);
+  };
+
   const manejarEnvio = async (evento) => {
     evento.preventDefault();
 
     const nuevoOficio = {
       ...formulario,
       id: Date.now(),
-      valoracion: 5
+      foto,
+      valoracion: 0,
+      votos: 0
     };
 
     try {
@@ -74,12 +101,39 @@ export default function App() {
       const guardado = await respuesta.json();
       setOficios((anterior) => [guardado, ...anterior]);
       setFormulario(estadoInicialFormulario);
+      setFoto('');
       setMensaje('Servicio publicado correctamente.');
       setTimeout(() => setMensaje(''), 3000);
     } catch (err) {
       setError('No se pudo conectar con el backend. Se mantuvo la información local.');
       setOficios((anterior) => [nuevoOficio, ...anterior]);
       setFormulario(estadoInicialFormulario);
+      setFoto('');
+    }
+  };
+
+  const manejarValoracion = async (id, puntuacion) => {
+    try {
+      const respuesta = await fetch(`/api/oficios/${id}/valorar`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ puntuacion })
+      });
+      if (!respuesta.ok) return;
+      const { valoracion, votos } = await respuesta.json();
+      setOficios((anterior) =>
+        anterior.map((o) => (o.id === id ? { ...o, valoracion, votos } : o))
+      );
+    } catch {
+      // sin backend: actualiza solo en local
+      setOficios((anterior) =>
+        anterior.map((o) => {
+          if (o.id !== id) return o;
+          const votosPrev = o.votos || 1;
+          const nueva = Math.round(((o.valoracion * votosPrev + puntuacion) / (votosPrev + 1)) * 10) / 10;
+          return { ...o, valoracion: nueva, votos: votosPrev + 1 };
+        })
+      );
     }
   };
 
@@ -105,16 +159,32 @@ export default function App() {
         <section className="panel panel-form">
           <h2>Publicar un servicio</h2>
           <form onSubmit={manejarEnvio} className="formulario">
-            <input name="nombre" placeholder="Nombre completo" value={formulario.nombre} onChange={manejarCambio} required />
+            <input name="nombre" placeholder="Nombre completo" value={formulario.nombre} onChange={manejarCambio} required maxLength={100} />
             <select name="oficio" value={formulario.oficio} onChange={manejarCambio}>
               {categorias.filter((item) => item !== 'Todas').map((item) => (
                 <option key={item} value={item}>{item}</option>
               ))}
             </select>
-            <input name="ubicacion" placeholder="Ubicación" value={formulario.ubicacion} onChange={manejarCambio} required />
-            <input name="experiencia" placeholder="Experiencia" value={formulario.experiencia} onChange={manejarCambio} required />
-            <input name="telefono" placeholder="Teléfono" value={formulario.telefono} onChange={manejarCambio} required />
-            <textarea name="descripcion" placeholder="Descripción del servicio" value={formulario.descripcion} onChange={manejarCambio} required />
+            <input name="ubicacion" placeholder="Ubicación" value={formulario.ubicacion} onChange={manejarCambio} required maxLength={100} />
+            <input name="experiencia" placeholder="Experiencia (ej: 3 años)" value={formulario.experiencia} onChange={manejarCambio} required maxLength={100} />
+            <input name="telefono" placeholder="Teléfono (solo dígitos)" value={formulario.telefono} onChange={manejarCambio} required maxLength={20} pattern="[\d\s\-()+]{7,20}" title="Solo dígitos, espacios y guiones" />
+            <textarea name="descripcion" placeholder="Descripción del servicio" value={formulario.descripcion} onChange={manejarCambio} required maxLength={500} />
+
+            <div className="campo-foto">
+              <label className="label-foto" htmlFor="foto-input">
+                {foto ? 'Cambiar foto' : 'Subir foto de perfil (opcional)'}
+              </label>
+              <input
+                id="foto-input"
+                type="file"
+                accept="image/*"
+                onChange={manejarFoto}
+                className="input-foto-oculto"
+              />
+              {errorFoto && <p className="aviso" style={{ margin: '4px 0 0' }}>{errorFoto}</p>}
+              {foto && <img src={foto} alt="Preview" className="foto-preview" />}
+            </div>
+
             <button type="submit">Publicar</button>
           </form>
           {mensaje ? <p className="ok">{mensaje}</p> : null}
@@ -148,23 +218,33 @@ export default function App() {
 
           {cargando ? (
             <p>Cargando servicios...</p>
+          ) : oficiosFiltrados.length === 0 ? (
+            <p className="vacio">No se encontraron servicios con ese criterio.</p>
           ) : (
             <div className="tarjetas">
               {oficiosFiltrados.map((item) => (
                 <article className="card" key={item.id}>
                   <div className="card-head">
-                    <div>
+                    <Avatar nombre={item.nombre} foto={item.foto} />
+                    <div className="card-info">
                       <h3>{item.nombre}</h3>
                       <p>{item.oficio}</p>
                     </div>
-                    <span className="rating">★ {item.valoracion}</span>
                   </div>
                   <p>{item.descripcion}</p>
                   <div className="meta">
                     <span>{item.ubicacion}</span>
                     <span>{item.experiencia}</span>
                   </div>
-                  <a className="telefono" href={`tel:${item.telefono.replace(/\s/g, '')}`}>
+                  <Estrellas
+                    valoracion={item.valoracion}
+                    votos={item.votos || 0}
+                    onValorar={(puntuacion) => manejarValoracion(item.id, puntuacion)}
+                  />
+                  <a
+                    className="telefono"
+                    href={/^[\d\s\-+()]{7,20}$/.test(item.telefono) ? `tel:${item.telefono.replace(/\s/g, '')}` : '#'}
+                  >
                     Contactar: {item.telefono}
                   </a>
                 </article>
